@@ -9,6 +9,7 @@ for the top stories, a day-in-numbers strip, a region count bar, a numbered
 pin map, a certainty tag on every story, and a date-check box with press time.
 """
 import math
+import os
 import struct
 import sys
 import zlib
@@ -793,7 +794,9 @@ def render():
 def main():
     cv = render()
     rgb = cv.downsample()
-    size = write_png("entry.png", rgb)
+    out = os.environ.get("MAKEFUN_OUTPUT_DIR", "")
+    path = os.path.join(out, "entry.png") if out else "entry.png"
+    size = write_png(path, rgb)
     print("entry.png %d bytes, %dx%d" % (size, W, H))
 
 if __name__ == "__main__":
